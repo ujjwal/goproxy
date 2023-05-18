@@ -270,6 +270,14 @@ func (proxy *ProxyHttpServer) handleHttps(w http.ResponseWriter, r *http.Request
 					ctx.Warnf("Cannot write TLS response HTTP status from mitm'd client: %v", err)
 					return
 				}
+				if resp.Request.Method != "HEAD" {
+					if req.ContentLength >= 0 {
+						resp.Header.Set("Content-Length", strconv.FormatInt(req.ContentLength, 10))
+					} else {
+						resp.Header.Del("Content-Length")
+						resp.Header.Set("Transfer-Encoding", "chunked")
+					}
+				}
 
 				// Force connection close otherwise chrome will keep CONNECT tunnel open forever
 				resp.Header.Set("Connection", "close")
