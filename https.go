@@ -275,7 +275,6 @@ func (proxy *ProxyHttpServer) handleHttps(w http.ResponseWriter, r *http.Request
 						resp.Header.Set("Content-Length", strconv.FormatInt(req.ContentLength, 10))
 					} else {
 						resp.Header.Del("Content-Length")
-						resp.Header.Set("Transfer-Encoding", "chunked")
 					}
 				}
 
