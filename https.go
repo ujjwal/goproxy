@@ -271,7 +271,7 @@ func (proxy *ProxyHttpServer) handleHttps(w http.ResponseWriter, r *http.Request
 					return
 				}
 				if resp.Request.Method != "HEAD" {
-					if req.ContentLength >= 0 {
+					if req.ContentLength > 0 {
 						resp.Header.Set("Content-Length", strconv.FormatInt(req.ContentLength, 10))
 					} else {
 						resp.Header.Set("Content-Length", "-1")
